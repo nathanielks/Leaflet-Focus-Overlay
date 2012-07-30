@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet debug page</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+     <!--[if lte IE 8]>
+         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+     <![endif]-->
+
+    <style type="text/css">
+        #map {
+            width: 800px; 
+            height: 600px; 
+            border: 1px solid #ccc;
+        }
+    </style>
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
+    <script src="../leaflet-focus-overlay.js"></script>
+    <link rel="stylesheet" href="../leaflet-focus-overlay.css" />
+    
+
+</head>
+<body>
+
+	<div id="map"></div>
+	<button id="populate">Populate with 10 markers</button>
+
+	<script type="text/javascript">
+		var cloudmade = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/997/256/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade',
+			key: 'BC9A493B41014CAABB98F0471D759707'
+		});
+
+		var map = L.map('map')
+				.setView([50.5, 30.51], 15)
+				.addLayer(cloudmade);
+
+		var markers = new L.FeatureGroup();
+
+        function getRandomLatLng(map) {
+            var bounds = map.getBounds(),
+                southWest = bounds.getSouthWest(),
+                northEast = bounds.getNorthEast(),
+                lngSpan = northEast.lng - southWest.lng,
+                latSpan = northEast.lat - southWest.lat;
+
+            return new L.LatLng(
+                    southWest.lat + latSpan * Math.random(),
+                    southWest.lng + lngSpan * Math.random());
+        }
+
+		function populate() {
+			for (var i = 0; i < 10; i++) {
+				markers.addLayer(new L.Marker(getRandomLatLng(map)));
+			}
+			return false;
+		}
+
+		markers.bindPopup("<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.</p><p>Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque.</p>");
+
+		map.addLayer(markers);
+
+		populate();
+		L.DomUtil.get('populate').onclick = populate;
+
+
+        var overlayUrl = 'overlay-small.png',
+            focusOverlay = L.focusOverlay(overlayUrl, new L.Point(546, 544)).addTo(map);
+
+	</script>
+</body>
+</html>

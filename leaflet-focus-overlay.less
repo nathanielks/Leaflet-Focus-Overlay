@@ -1,0 +1,46 @@
+.focus-overlay( @bg-color, @width, @height, @iconOffset ){
+	.leaflet-focus-overlay{
+		height: @height*3;
+		width: @width*5;
+		margin-left: -((@width*5)/2);
+		margin-top: -((@height*3)/2) + @iconOffset;
+		position: absolute;
+		z-index: 400;
+		-webkit-transition: opacity 250ms ease;
+		-moz-transition: opacity 250ms ease;
+		-ms-transition: opacity 250ms ease;
+		-o-transition: opacity 250ms ease;
+		transition: opacity 250ms ease;
+		-webkit-transform: translate(0, 0);
+		-moz-transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+		-o-transform: translate(0, 0);
+		transform: translate(0, 0);
+
+		[class^="overlay-"]{
+			background: @bg-color;
+			float: left;
+		}
+		.overlay-top, .overlay-middle, .overlay-bottom{
+			display: block;
+			height: @height;
+			width: @width*5;
+		}
+		.overlay-left, .overlay-right{
+			height: @height;
+			width: @width*2;
+		}
+		.overlay-middle, .overlay-center{
+			background: transparent;
+		}
+		&.add-transition{
+			-webkit-transition: all 250ms ease;
+			-moz-transition: all 250ms ease;
+			-ms-transition: all 250ms ease;
+			-o-transition: all 250ms ease;
+			transition: all 250ms ease;
+		}
+	}
+}
+
+.focus-overlay(rgba(0,0,0,.5), 546px, 544px, -68px );
