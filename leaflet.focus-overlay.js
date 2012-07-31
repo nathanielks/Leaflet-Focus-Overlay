@@ -1,6 +1,11 @@
 L.FocusOverlay = L.Class.extend({
     includes: L.Mixin.Events,
 
+    options: {
+        duration: 250,
+        easing: 'ease'
+    },
+
     initialize: function (size, options) { // (String, LatLngBounds, Object)
         this._size = L.point(size);
         this._positionSet = false;
@@ -19,10 +24,11 @@ L.FocusOverlay = L.Class.extend({
         map._panes.overlayPane.appendChild(this._overlay);
 
         map.on('viewreset dragend', this._reset, this);
-        map.on('popupopen', this._setViewToPopup, this);
+        map.on('popupopen', this._setPopupLatLng, this);
         map.on('popupopen', this.fadeIn, this);
         map.on('dragstart click popupclose', this.fadeOut, this );
         map.on('dragstart click', this._removeTransition, this);
+        this.on('moveend', this._addTransition, this);
 
         this._reset();
     },
@@ -46,7 +52,8 @@ L.FocusOverlay = L.Class.extend({
     fadeIn: function(){
         this
             .setOpacity(1)
-            .moveToPoint()
+            .setViewToPopup(this._map.currentPoint)
+            .moveToPoint(this._map.currentPoint)
             ._addTransition();
         return this;
     },
@@ -56,22 +63,27 @@ L.FocusOverlay = L.Class.extend({
         return this;
     },
 
-    moveToPoint: function(){
-        var point = this._map.latLngToLayerPoint(this._map.currentPoint);
+    moveToPoint: function(latlng){
+        var point = this._map.latLngToLayerPoint(latlng);
         this._moveToPoint(point);
         return this;
     },
 
     _addTransition: function(){
-            L.DomUtil.addClass(this._overlay, 'add-transition');
+        //L.DomUtil.addClass(this._overlay, 'add-transition');
+        this._overlay.style[L.Transition.DURATION] = this.options.duration + 'ms';
+        this._overlay.style[L.Transition.EASING] = this.options.easing;
+        this._overlay.style[L.Transition.PROPERTY] = 'all'; 
+
     },
 
     _removeTransition: function(){
-            L.DomUtil.removeClass(this._overlay, 'add-transition');
+        this._overlay.style[L.Transition.PROPERTY] = 'opacity'; 
     },
 
     _moveToPoint: function(point){
         L.DomUtil.setPosition(this._overlay, point);
+        this.fire('moveend');
         return this;
     },
 
@@ -96,16 +108,17 @@ L.FocusOverlay = L.Class.extend({
         L.DomUtil.setPosition(this._overlay, this._map.latLngToLayerPoint(this._map.getCenter()));
     },
 
-    _setViewToPopup: function(e){
+    _setPopupLatLng: function(e){
         var lat = e.popup._latlng.lat,
             lng = e.popup._latlng.lng,
-            latLng = new L.LatLng(lat, lng);
-        this._map.setView(latLng, this._map.getZoom() );
-        this._map.currentPoint = latLng;
+            latlng = new L.LatLng(lat, lng);
+        this._map.currentPoint = latlng;
+        return latlng;
     },
 
-    _onOverlayLoad: function () {
-        this.fire('load');
+    setViewToPopup: function(latlng){
+        this._map.setView(latlng, this._map.getZoom() );
+        return this;
     },
 
     _updateOpacity: function () {
