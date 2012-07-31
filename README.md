@@ -27,4 +27,4 @@ case it's 546px and 544px, respectively. The iconOffset compensates for the heig
 of the icon, so that way when the overlay is present it doesn't look offcenter.
 
 [1]: http://leaflet.cloudemade.com
-[2]: http://fightthecurrent.org/leaflet-focus-overlay
+[2]: http://fightthecurrent.org/leaflet-focus-overlay/example/map.html
