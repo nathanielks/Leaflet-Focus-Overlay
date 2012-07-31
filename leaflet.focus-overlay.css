@@ -1,45 +1,6 @@
-.leaflet-focus-overlay {
-  height: 1632px;
-  width: 2730px;
-  margin-left: -1365px;
-  margin-top: -884px;
-  position: absolute;
-  z-index: 400;
-  -webkit-transition: opacity 250ms ease;
-  -moz-transition: opacity 250ms ease;
-  -ms-transition: opacity 250ms ease;
-  -o-transition: opacity 250ms ease;
-  transition: opacity 250ms ease;
-  -webkit-transform: translate(0, 0);
-  -moz-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-.leaflet-focus-overlay [class^="overlay-"] {
-  background: rgba(0, 0, 0, 0.5);
-  float: left;
-}
-.leaflet-focus-overlay .overlay-top,
-.leaflet-focus-overlay .overlay-middle,
-.leaflet-focus-overlay .overlay-bottom {
-  display: block;
-  height: 544px;
-  width: 2730px;
-}
-.leaflet-focus-overlay .overlay-left,
-.leaflet-focus-overlay .overlay-right {
-  height: 544px;
-  width: 1092px;
-}
-.leaflet-focus-overlay .overlay-middle,
-.leaflet-focus-overlay .overlay-center {
-  background: transparent;
-}
-.leaflet-focus-overlay.add-transition {
-  -webkit-transition: all 250ms ease;
-  -moz-transition: all 250ms ease;
-  -ms-transition: all 250ms ease;
-  -o-transition: all 250ms ease;
-  transition: all 250ms ease;
-}
+.leaflet-focus-overlay{height:1650px;width:2750px;margin-left:-1375px;margin-top:-893px;position:absolute;z-index:400;-webkit-transition:opacity 250ms ease;-moz-transition:opacity 250ms ease;-ms-transition:opacity 250ms ease;-o-transition:opacity 250ms ease;transition:opacity 250ms ease;-webkit-transform:translate(0, 0);-moz-transform:translate(0, 0);-ms-transform:translate(0, 0);-o-transform:translate(0, 0);transform:translate(0, 0);}.leaflet-focus-overlay [class^="overlay-"]{background:rgba(0, 0, 0, 0.5);float:left;}
+.leaflet-focus-overlay .overlay-top,.leaflet-focus-overlay .overlay-middle,.leaflet-focus-overlay .overlay-bottom{display:block;height:550px;width:2750px;}
+.leaflet-focus-overlay .overlay-left,.leaflet-focus-overlay .overlay-right{height:550px;width:1100px;}
+.leaflet-focus-overlay .overlay-middle,.leaflet-focus-overlay .overlay-center{background:transparent;}
+.leaflet-focus-overlay .overlay-center{background:url('example/overlay-small.png') no-repeat center center;background:-moz-radial-gradient(circle closest-side, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));background:-o-radial-gradient(circle closest-side, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));background:-webkit-radial-gradient(circle closest-side, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));background:radial-gradient(circle closest-side, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));height:550px;width:550px;}
+.leaflet-focus-overlay.add-transition{-webkit-transition:all 250ms ease;-moz-transition:all 250ms ease;-ms-transition:all 250ms ease;-o-transition:all 250ms ease;transition:all 250ms ease;}

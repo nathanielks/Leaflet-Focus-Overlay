@@ -1,4 +1,29 @@
-.focus-overlay( @bg-color, @width, @height, @iconOffset ){
+//Borrowed from Twitter Bootstrap, http://twitter.github.com/bootstrap
+.transition(@transition) {
+  -webkit-transition: @transition;
+     -moz-transition: @transition;
+      -ms-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;
+}
+
+//Borrowed from Twitter Bootstrap, http://twitter.github.com/bootstrap
+.translate(@x: 0, @y: 0) {
+  -webkit-transform: translate(@x, @y);
+     -moz-transform: translate(@x, @y);
+      -ms-transform: translate(@x, @y);
+       -o-transform: translate(@x, @y);
+          transform: translate(@x, @y);
+}
+
+.radial-gradient(@color1, @color2){
+	background: -moz-radial-gradient( circle closest-side, @color1,@color2 );
+	background: -o-radial-gradient( circle closest-side, @color1,@color2 );
+	background: -webkit-radial-gradient( circle closest-side, @color1,@color2 );
+	background: radial-gradient( circle closest-side, @color1,@color2 );
+}
+
+.focus-overlay( @bg-color, @width, @height, @iconOffset, @fallbackImage:'' ){
 	.leaflet-focus-overlay{
 		height: @height*3;
 		width: @width*5;
@@ -33,6 +58,12 @@
 		.overlay-middle, .overlay-center{
 			background: transparent;
 		}
+		.overlay-center{
+			background: url(@fallbackImage) no-repeat center center;
+			.radial-gradient(rgba(0,0,0,0), @bg-color);
+			height: @height;
+			width: @width;
+		}
 		&.add-transition{
 			-webkit-transition: all 250ms ease;
 			-moz-transition: all 250ms ease;
@@ -43,4 +74,4 @@
 	}
 }
 
-.focus-overlay(rgba(0,0,0,.5), 546px, 544px, -68px );
+.focus-overlay(rgba(0,0,0,.5), 550px, 550px, -68px, 'example/overlay-small.png');

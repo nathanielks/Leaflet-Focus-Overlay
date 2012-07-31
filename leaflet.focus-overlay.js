@@ -1,14 +1,10 @@
 L.FocusOverlay = L.Class.extend({
     includes: L.Mixin.Events,
 
-    options: {
-        opacity: 0,
-    },
-
-    initialize: function (url, size, options) { // (String, LatLngBounds, Object)
-        this._url = url;
+    initialize: function (size, options) { // (String, LatLngBounds, Object)
         this._size = L.point(size);
         this._positionSet = false;
+        this._opacity = 0;
 
         L.Util.setOptions(this, options);
     },
@@ -42,7 +38,7 @@ L.FocusOverlay = L.Class.extend({
     },
 
     setOpacity: function (opacity) {
-        this.options.opacity = opacity;
+        this._opacity = opacity;
         this._updateOpacity();
         return this;
     },
@@ -52,13 +48,11 @@ L.FocusOverlay = L.Class.extend({
             .setOpacity(1)
             .moveToPoint()
             ._addTransition();
-        console.log('fade in');
         return this;
     },
 
     fadeOut: function(){
-        this.setOpacity(0); 
-        console.log('fade out');
+        this.setOpacity(0);
         return this;
     },
 
@@ -86,30 +80,12 @@ L.FocusOverlay = L.Class.extend({
         this._overlay.top = L.DomUtil.create('div', 'overlay-top', this._overlay);
         this._overlay.middle = L.DomUtil.create('div', 'overlay-middle', this._overlay);
             this._overlay.middle.left = L.DomUtil.create('div', 'overlay-left', this._overlay.middle);
-            this._overlay.image = L.DomUtil.create('img', 'overlay-center', this._overlay.middle);
+            this._overlay.image = L.DomUtil.create('div', 'overlay-center', this._overlay.middle);
             this._overlay.middle.right = L.DomUtil.create('div', 'overlay-right', this._overlay.middle);
         this._overlay.bottom = L.DomUtil.create('div', 'overlay-bottom', this._overlay);
 
 
-        if (this._map.options.zoomAnimation && L.Browser.any3d) {
-            L.DomUtil.addClass(this._overlay, 'leaflet-zoom-animated');
-        } else {
-            L.DomUtil.addClass(this._overlay, 'leaflet-zoom-hide');
-        }
-
         this._updateOpacity();
-
-        //TODO createImage util method to remove duplication
-        L.Util.extend(this._overlay.image, {
-            galleryimg: 'no',
-            onselectstart: L.Util.falseFn,
-            onmousemove: L.Util.falseFn,
-            onload: L.Util.bind(this._onOverlayLoad, this),
-            src: this._url
-        });
-
-        this._overlay.image.style.width = this._size.x + 'px'; 
-        this._overlay.image.style.height = this._size.y + 'px'; 
     },
 
     _getViewCenter: function(){
@@ -133,10 +109,10 @@ L.FocusOverlay = L.Class.extend({
     },
 
     _updateOpacity: function () {
-        L.DomUtil.setOpacity(this._overlay, this.options.opacity);
+        L.DomUtil.setOpacity(this._overlay, this._opacity);
     }
 });
 
-L.focusOverlay = function (url, size, options) {
-    return new L.FocusOverlay(url, size, options);
+L.focusOverlay = function () {
+    return new L.FocusOverlay();
 };
